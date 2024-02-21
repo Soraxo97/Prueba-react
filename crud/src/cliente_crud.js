@@ -35,7 +35,9 @@ function Clientescrud() {
   const fetchData = async () => {
     try {
       const order = orderByIDAsc ? "asc" : "desc";
-      const response = await axios.get(`https://localhost:7288/api/Cliente_/Seleccionar`);
+      const response = await axios.get(
+        `https://localhost:7288/api/Cliente_/Seleccionar`
+      );
       const sortedData = _.orderBy(response.data, ["id"], [order]);
       setClientes(sortedData);
     } catch (error) {
@@ -51,11 +53,14 @@ function Clientescrud() {
   // Función para guardar un nuevo cliente
   const handleGuardar = async () => {
     try {
-      const response = await axios.post("https://localhost:7288/api/Cliente_/Guardar", {
-        rut: rut,
-        nombre: nombre,
-        fechaNacimiento: fechaNacimiento,
-      });
+      const response = await axios.post(
+        "https://localhost:7288/api/Cliente_/Guardar",
+        {
+          rut: rut,
+          nombre: nombre,
+          fechaNacimiento: fechaNacimiento,
+        }
+      );
 
       if (response.status === 201) {
         setRut("");
@@ -84,12 +89,15 @@ function Clientescrud() {
   // Función para actualizar un cliente editado
   const handleActualizar = async () => {
     try {
-      const response = await axios.put(`https://localhost:7288/api/Cliente_/Editar/${editingCliente.id}`, {
-        id: editingCliente.id,
-        rut: rut,
-        nombre: nombre,
-        fechaNacimiento: fechaNacimiento,
-      });
+      const response = await axios.put(
+        `https://localhost:7288/api/Cliente_/Editar/${editingCliente.id}`,
+        {
+          id: editingCliente.id,
+          rut: rut,
+          nombre: nombre,
+          fechaNacimiento: fechaNacimiento,
+        }
+      );
 
       if (response.status === 200) {
         setRut("");
@@ -109,23 +117,24 @@ function Clientescrud() {
     }
   };
 
- // Función para eliminar un cliente
-const handleEliminar = async (id) => {
-  try {
-    const response = await axios.delete(`https://localhost:7288/api/Cliente_/Eliminar/${id}`);
+  // Función para eliminar un cliente
+  const handleEliminar = async (id) => {
+    try {
+      const response = await axios.delete(
+        `https://localhost:7288/api/Cliente_/Eliminar/${id}`
+      );
 
-    if (response.status === 200) {
-      fetchData(); // Actualizar la lista de clientes después de eliminar
-      alert("Cliente eliminado exitosamente");
-    } else {
-      throw new Error("Error al eliminar el cliente");
+      if (response.status === 200) {
+        fetchData(); // Actualizar la lista de clientes después de eliminar
+        alert("Cliente eliminado exitosamente");
+      } else {
+        throw new Error("Error al eliminar el cliente");
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error);
+      alert("Error al eliminar el cliente");
     }
-  } catch (error) {
-    console.error("Error al enviar la solicitud:", error);
-    alert("Error al eliminar el cliente");
-  }
-};
-
+  };
 
   // Función para mostrar el modal con las cuentas del cliente
   const handleViewCuentas = (cliente) => {
@@ -150,23 +159,48 @@ const handleEliminar = async (id) => {
         <div className="card-body">
           <h5 className="card-title">Ingresar Nuevo Cliente</h5>
           <div className="form-group">
-            <input type="text" className="form-control" placeholder="Rut" value={rut} onChange={(e) => setRut(e.target.value)} />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Rut"
+              value={rut}
+              onChange={(e) => setRut(e.target.value)}
+            />
           </div>
           <div className="form-group">
-            <input type="text" className="form-control" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Nombre"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+            />
           </div>
           <div className="form-group">
-            <input type="date" className="form-control" placeholder="Fecha de Nacimiento" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} />
+            <input
+              type="date"
+              className="form-control"
+              placeholder="Fecha de Nacimiento"
+              value={fechaNacimiento}
+              onChange={(e) => setFechaNacimiento(e.target.value)}
+            />
           </div>
           {/* Botones para guardar o actualizar cliente */}
           {!editingCliente || !showCancelarButton ? (
-            <button onClick={handleGuardar} className="btn btn-primary mr-2">Guardar</button>
+            <button onClick={handleGuardar} className="btn btn-primary mr-2">
+              Guardar
+            </button>
           ) : (
-            <button onClick={handleActualizar} className="btn btn-warning mr-2">Actualizar</button>
+            <button onClick={handleActualizar} className="btn btn-warning mr-2">
+              Actualizar
+            </button>
           )}
+          {" "}
           {/* Botón para cancelar edición */}
           {showCancelarButton && (
-            <button onClick={handleCancelar} className="btn btn-secondary">Cancelar</button>
+            <button onClick={handleCancelar} className="btn btn-secondary">
+              Cancelar
+            </button>
           )}
         </div>
       </div>
@@ -200,9 +234,24 @@ const handleEliminar = async (id) => {
                     <td>{cliente.fechaNacimiento}</td>
                     {/* Botones para editar, eliminar y ver cuentas del cliente */}
                     <td>
-                      <button onClick={() => handleEditar(cliente)} className="btn btn-warning mr-2">Editar</button>
-                      <button onClick={() => handleEliminar(cliente.id)} className="btn btn-danger mr-2">Eliminar</button>
-                      <button onClick={() => handleViewCuentas(cliente)} className="btn btn-info mr-2">Ver Cuentas</button>
+                      <button
+                        onClick={() => handleEditar(cliente)}
+                        className="btn btn-warning mr-2"
+                      >
+                        Editar
+                      </button>{" "}
+                      <button
+                        onClick={() => handleEliminar(cliente.id)}
+                        className="btn btn-danger mr-2"
+                      >
+                        Eliminar
+                      </button>{" "}
+                      <button
+                        onClick={() => handleViewCuentas(cliente)}
+                        className="btn btn-info mr-2"
+                      >
+                        Ver Cuentas
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -213,7 +262,10 @@ const handleEliminar = async (id) => {
       </div>
       {/* Modal para mostrar detalles de cuenta */}
       {showModal && (
-        <ModalCuenta clienteId={selectedCliente.id} onClose={() => setShowModal(false)} />
+        <ModalCuenta
+          clienteId={selectedCliente.id}
+          onClose={() => setShowModal(false)}
+        />
       )}
     </div>
   );

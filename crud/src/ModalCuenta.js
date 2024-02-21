@@ -156,6 +156,7 @@ function ModalCuenta({ clienteId, onClose }) {
                       <Button onClick={() => handleEditarCuenta(cuenta.id)} className="btn btn-warning mr-2">
                         Editar
                       </Button>
+                      {" "}
                       <Button onClick={() => handleEliminarCuenta(cuenta.id)} className="btn btn-danger mr-2">
                         Eliminar
                       </Button>
