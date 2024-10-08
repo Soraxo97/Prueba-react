@@ -62,7 +62,7 @@ function Clientescrud() {
         }
       );
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         setRut("");
         setNombre("");
         setFechaNacimiento("");
